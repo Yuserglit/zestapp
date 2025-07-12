@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZestApp</title>
+<style>
+body { font-family: Arial, sans-serif; background: #f2f2f2; margin:0; padding:0; }
+.header { background:#000; color:#fff; padding:10px; text-align:center; }
+.container { max-width:500px; margin:20px auto; background:#fff; padding:20px; border-radius:10px; }
+button { padding:10px 15px; margin:5px; border:none; border-radius:5px; cursor:pointer; }
+.upload { border:2px dashed #ccc; padding:20px; text-align:center; margin:10px 0; }
+textarea, input[type=text] { width:100%; margin:5px 0; padding:10px; border:1px solid #ccc; border-radius:5px; }
+.hidden { display:none; }
+.star { color:gold; }
+</style>
+</head>
+<body>
+
+<div class="header">ZestApp</div>
+
+<div id="login" class="container">
+  <h3>Admin Girişi</h3>
+  <input type="text" id="email" placeholder="E-posta">
+  <button onclick="checkLogin()">Giriş Yap</button>
+</div>
+
+<div id="admin" class="container hidden">
+  <h3>Admin Panel</h3>
+  <div class="upload">
+    <p>AAB Dosyası Yükle</p>
+    <input type="file" id="aab">
+  </div>
+  <div class="upload">
+    <p>Logo Yükle</p>
+    <input type="file" id="logo">
+  </div>
+  <div class="upload">
+    <p>Resim (9:16) Yükle</p>
+    <input type="file" id="screenshot">
+  </div>
+  <input type="text" id="appName" placeholder="Uygulama İsmi">
+  <textarea id="appDesc" placeholder="Açıklama"></textarea>
+  <button onclick="publishApp()">Yayınla</button>
+  <p id="publishStatus"></p>
+</div>
+
+<div id="store" class="container hidden">
+  <img id="storeLogo" src="" alt="Logo" style="width:100px;">
+  <h2 id="storeName">Uygulama İsmi</h2>
+  <p id="storeDesc">Açıklama</p>
+  <img id="storeScreenshot" src="" alt="Screenshot" style="width:100%; margin:10px 0;">
+  <button id="storeBtn">Yükle</button>
+  <div>
+    <h4>Yorumlar</h4>
+    <div id="comments">
+      <p><span class="star">★★★★★</span> Harika bir uygulama!</p>
+      <p><span class="star">★★★★☆</span> Güzel ama geliştirilebilir.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+let app = {
+  name: '',
+  desc: '',
+  logo: '',
+  screenshot: '',
+  aab: ''
+};
+
+function checkLogin() {
+  const mail = document.getElementById('email').value.trim();
+  if (mail === 'ezizaranow721@gmail.com') {
+    document.getElementById('login').classList.add('hidden');
+    document.getElementById('admin').classList.remove('hidden');
+  } else {
+    alert('Yetkisiz e-posta');
+  }
+}
+
+function publishApp() {
+  app.name = document.getElementById('appName').value.trim();
+  app.desc = document.getElementById('appDesc').value.trim();
+  app.logo = document.getElementById('logo').files[0]?.name || '';
+  app.screenshot = document.getElementById('screenshot').files[0]?.name || '';
+  app.aab = document.getElementById('aab').files[0]?.name || '';
+  
+  if (!app.name || !app.desc || !app.logo || !app.screenshot || !app.aab) {
+    document.getElementById('publishStatus').innerText = "Tüm alanları doldurun!";
+    return;
+  }
+
+  document.getElementById('admin').classList.add('hidden');
+  document.getElementById('store').classList.remove('hidden');
+
+  document.getElementById('storeName').innerText = app.name;
+  document.getElementById('storeDesc').innerText = app.desc;
+  document.getElementById('storeLogo').src = URL.createObjectURL(document.getElementById('logo').files[0]);
+  document.getElementById('storeScreenshot').src = URL.createObjectURL(document.getElementById('screenshot').files[0]);
+  document.getElementById('storeBtn').innerText = "Yükle";
+}
+</script>
+
+</body>
+</html>
