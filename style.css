@@ -1,0 +1,27 @@
+body {
+  margin: 0; font-family: Arial,sans-serif; background: #f4f4f9; color: #333;
+}
+header {
+  background: #000; color: #fff; padding: 1em; display:flex; justify-content:space-between; align-items:center;
+}
+header h1 { margin:0; font-size:1.2em; }
+main {
+  max-width:600px; margin:2em auto; background:#fff; padding:2em; box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+button {
+  background:#000; color:#fff; border:none; padding:.7em 1.2em; cursor:pointer; border-radius:4px;
+}
+button:hover {opacity:0.8}
+.input {width:100%;padding:.5em;margin:.5em 0;border:1px solid #ccc;border-radius:4px;}
+#drawer {
+  position:fixed;top:0;left:-250px;width:250px;height:100%;background:#222;color:#fff;padding:1em;transition:.3s;
+}
+#drawer.open {left:0;}
+.drawer-item {margin:1em 0;cursor:pointer;}
+.progress-bar {
+  width:100%;background:#ddd;height:20px;border-radius:10px;overflow:hidden;margin:.5em 0;
+}
+.progress-bar-inner {
+  height:100%;width:0;background:#4caf50;text-align:center;color:white;font-size:12px;line-height:20px;
+}
+.card {border:1px solid #ddd;padding:1em;margin:.5em 0;border-radius:4px;background:#fafafa;}
