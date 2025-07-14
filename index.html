@@ -1,53 +1,295 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZestApp - Mağaza</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZestApp - Program</title>
 
-<!-- Favicon -->
-<link rel="icon" href="web-uygulaması-bildirimi-512x512.png" type="image/png" sizes="512x512">
+  <!-- Favicon -->
+  <link rel="icon" href="web-uygulaması-bildirimi-512x512.png" type="image/png" sizes="512x512">
 
-<!-- SEO ve Açıklama -->
-<meta name="description" content="Zest bilen hem gazanç ediň, hem bilimiňizi ösüşdiriň, hem aýdym diňlaň hemde reklama ediň!">
-<meta name="keywords" content="Zest, gazanç, online müzik, apk, çalar, pul, ücretsiz müzik, dinle">
-<meta name="author" content="Yuserglit">
+  <!-- SEO ve Açıklama -->
+  <meta name="description" content="Zest bilen hem gazanç ediň, hem bilimiňizi ösüşdiriň, hem aýdym diňlaň hemde reklama ediň!">
+  <meta name="keywords" content="Zest, gazanç, online müzik, apk, çalar, pul, ücretsiz müzik, dinle">
+  <meta name="author" content="Yuserglit">
 
-<!-- Tema Rengi (Mobil Tarayıcılar için) -->
-<meta name="theme-color" content="#000000">
+  <!-- Tema Rengi (Mobil Tarayıcılar için) -->
+  <meta name="theme-color" content="#000000">
 
-<!-- Sosyal Medya Paylaşımı -->
-<meta property="og:title" content="ZestApp">
-<meta property="og:description" content="Zest muğut aýdym diňlemek ve gazanç etme programasy.">
-<meta property="og:image" content="https://www.zest.app.tc/web-uygulaması-bildirimi-512x512.png">
-<meta property="og:url" content="https://www.zest.app.tc">
-<meta property="og:type" content="website">
+  <!-- Sosyal Medya Paylaşımı -->
+  <meta property="og:title" content="ZestApp">
+  <meta property="og:description" content="Zest muğut aýdym diňlemek ve gazanç etme programasy.">
+  <meta property="og:image" content="https://www.zest.app.tc/web-uygulaması-bildirimi-512x512.png">
+  <meta property="og:url" content="https://www.zest.app.tc">
+  <meta property="og:type" content="website">
 
-<!-- Twitter Kartı -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ZestApp">
-<meta name="twitter:description" content="Zest app muğut aýdym diňlemek ve pul gazanmak.">
-<meta name="twitter:image" content="https://www.zest.app.tc/web-uygulaması-bildirimi-512x512.png">
+  <!-- Twitter Kartı -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ZestApp">
+  <meta name="twitter:description" content="Zest app muğut aýdym diňlemek ve pul gazanmak.">
+  <meta name="twitter:image" content="https://www.zest.app.tc/web-uygulaması-bildirimi-512x512.png">
 
-<link rel="stylesheet" href="style.css">
-<script defer src="app.js"></script>
+  <!-- Yazı Tipi ve Stil -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing:border-box; margin:0; padding:0 }
+    body {
+      font-family:'Playfair Display',serif;
+      background:linear-gradient(135deg,rgba(240,248,255,0.6),rgba(224,255,255,0.6));
+      color:#222; overflow-x:hidden; height:100vh;
+    }
+    .header {
+      position:fixed; top:0; left:0; right:0; height:60px;
+      background:rgba(255,255,255,0.4); backdrop-filter:blur(12px);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 20px; z-index:100;
+    }
+    .title { font-size:1.5rem; font-weight:700 }
+    .hamburger { font-size:1.8rem; cursor:pointer }
+    .menu-overlay {
+      position:fixed; top:0; left:0;
+      width:60%; height:100%;
+      background:rgba(255,255,255,0.6); backdrop-filter:blur(16px);
+      transform:translateX(-100%); transition:transform .3s;
+      padding:80px 20px; z-index:90;
+    }
+    .menu-overlay.open { transform:translateX(0) }
+    .menu-overlay button {
+      width:100%; margin:15px 0; padding:14px;
+      font-size:1.1rem; border:2px solid rgba(0,0,0,0.2);
+      border-radius:12px; background:rgba(255,255,255,0.8);
+      color:#222; cursor:pointer;
+    }
+    .main {
+      padding:80px 20px 20px; max-width:480px;
+      margin:0 auto; overflow-y:auto;
+    }
+    .app-card, .gallery-card, .desc-card, .rating-card {
+      background:rgba(255,255,255,0.5); backdrop-filter:blur(12px);
+      border-radius:24px; padding:24px 20px;
+      box-shadow:0 8px 24px rgba(0,0,0,0.1);
+      margin-bottom:20px;
+    }
+    .head-row { display:flex; align-items:center; gap:16px }
+    .logo-wrapper { position:relative; width:100px; height:100px }
+    .logo {
+      width:100%; height:100%; border-radius:50%;
+      background:#fff url('https://via.placeholder.com/100') center/cover no-repeat;
+      transition:transform .5s;
+    }
+    .progress-circle {
+      position:absolute; top:0; left:0;
+      width:100px; height:100px; transform:rotate(-90deg);
+      display:none;
+    }
+    .progress-circle circle { fill:none; stroke-width:6 }
+    .progress-circle .bg { stroke:rgba(0,0,0,0.1) }
+    .progress-circle .fg {
+      stroke:#4A90E2; stroke-dasharray:314; stroke-dashoffset:314;
+      transition:stroke-dashoffset .3s;
+    }
+    .app-info { flex:1 }
+    .app-title { font-size:1.8rem; font-weight:700; margin-bottom:6px }
+    .stats { font-size:0.9rem; opacity:0.8 }
+    .stats span+span::before { content:" | "; color:#555 }
+    .action-btn {
+      display:block; width:100%; padding:14px; margin-top:20px;
+      font-size:1.2rem; font-weight:700; border:none; border-radius:30px;
+      background:linear-gradient(135deg,#4A90E2,#357ABD);
+      color:#fff; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.2);
+    }
+    .gallery { display:flex; overflow-x:auto; gap:12px }
+    .gallery img {
+      width:140px; height:280px; object-fit:cover;
+      border-radius:16px; border:2px solid rgba(0,0,0,0.1);
+      flex-shrink:0;
+    }
+    .desc-card .title { font-size:1.2rem; font-weight:700; margin-bottom:8px }
+    .text-wrapper { max-height:80px; overflow-y:auto; padding-right:8px }
+    .text { font-size:1rem; line-height:1.4 }
+    .stars { display:flex; justify-content:center; gap:8px; margin-bottom:12px }
+    .star { font-size:2rem; cursor:pointer; color:#888; transition:color .2s }
+    .star.filled { color:gold }
+    .comment-overlay {
+      position:fixed; bottom:0; left:0; width:100%; height:50%;
+      background:rgba(255,255,255,0.8); backdrop-filter:blur(16px);
+      transform:translateY(100%); transition:transform .3s;
+      padding:20px; z-index:200;
+    }
+    .comment-overlay.open { transform:translateY(0) }
+    .comment-overlay h3 { text-align:center; margin-bottom:12px; font-size:1.2rem }
+    .comment-overlay textarea {
+      width:100%; height:80px; padding:8px; border-radius:10px;
+      font-size:1rem; resize:none; border:1px solid rgba(0,0,0,0.2);
+    }
+    .send-btn {
+      margin-top:12px; width:100%; padding:12px;
+      background:#4A90E2; color:#fff; border:none; border-radius:8px;
+      font-size:1rem; cursor:pointer;
+    }
+    .comments-list { max-height:200px; overflow-y:auto }
+    .comment-item {
+      background:rgba(255,255,255,0.6); border-radius:12px;
+      padding:10px; margin:8px 0; box-shadow:0 4px 12px rgba(0,0,0,0.1);
+    }
+    .comment-item .id { font-size:0.8rem; opacity:0.7; margin-bottom:4px }
+    .comment-item .text { font-size:1rem }
+    .more-btn {
+      width:100%; padding:10px; margin-top:10px;
+      border:none; border-radius:20px;
+      background:#357ABD; color:#fff; font-size:1rem;
+      cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.2);
+    }
+  </style>
 </head>
 <body>
-<header>
-  <button id="menuBtn">☰</button>
-  <h1>ZestApp</h1>
-</header>
 
-<div id="drawer">
-  <div class="drawer-item">Paylaş</div>
-  <div class="drawer-item">İletişim</div>
-  <a href="admin.html" class="drawer-item">Admin Panel</a>
-</div>
+  <div class="header">
+    <div class="title">Zest App</div>
+    <div class="hamburger" id="h">≡</div>
+  </div>
 
-<main>
-  <h2>Uygulama Mağazasına Hoş Geldiniz</h2>
-  <p>En yeni uygulamaları keşfet!</p>
-  <div id="apps"></div>
-</main>
+  <div class="menu-overlay" id="o">
+    <button id="c">İletişim</button>
+    <button id="s">Paylaş</button>
+    <button id="a">Admin Panel</button>
+  </div>
+
+  <div class="main" id="m">
+    <div class="app-card">
+      <div class="head-row">
+        <div class="logo-wrapper">
+          <div class="logo" id="l"></div>
+          <svg class="progress-circle" id="p" viewBox="0 0 100 100">
+            <circle class="bg" cx="50" cy="50" r="48"/>
+            <circle class="fg" cx="50" cy="50" r="48"/>
+          </svg>
+        </div>
+        <div class="app-info">
+          <div class="app-title">StarMaker: Karaoke Şarkı</div>
+          <div class="stats">
+            <span>500M+ İndirme</span>
+            <span>146 MB</span>
+            <span>12+</span>
+            <span>4.4★</span>
+          </div>
+        </div>
+      </div>
+      <button class="action-btn" id="b">İndir</button>
+    </div>
+
+    <div class="gallery-card">
+      <div class="gallery" id="g"></div>
+    </div>
+
+    <div class="desc-card">
+      <div class="title">Program Açıklaması</div>
+      <div class="text-wrapper">
+        <div class="text">
+          Karaoke söyle ve çok oyunculu çevrimiçi oyunlarda arkadaş edin. Yeni efektler, canlı tema seçenekleri ve sosyal paylaşım özellikleri ile şimdi daha eğlenceli!
+        </div>
+      </div>
+    </div>
+
+    <div class="rating-card">
+      <div class="stars" id="t">
+        <span class="star" data-val="1">☆</span>
+        <span class="star" data-val="2">☆</span>
+        <span class="star" data-val="3">☆</span>
+        <span class="star" data-val="4">☆</span>
+        <span class="star" data-val="5">☆</span>
+      </div>
+      <div class="comments-list" id="q"></div>
+    </div>
+  </div>
+
+  <div class="comment-overlay" id="d">
+    <h3 id="ht">Yorum ve Puan</h3>
+    <textarea id="i" maxlength="500" placeholder="Yorumunuzu yazın..."></textarea>
+    <button class="send-btn" id="n">Gönder</button>
+  </div>
+
+  <script>
+    h.onclick = () => o.classList.toggle("open");
+    o.onclick = e => e.target === o && o.classList.remove("open");
+    c.onclick = () => location.href = "mailto:cmsupporjs@gmail.com";
+    s.onclick = () => {
+      if (navigator.share) {
+        navigator.share({ title: document.title, url: location.href });
+      } else {
+        prompt("Linki kopyalayın:", location.href);
+      }
+    };
+    a.onclick = () => { m.style.display = "none"; window.location.href = "admin.html"; };
+
+    // Galeri placeholder
+    ["","","",""].forEach(_ => {
+      let x = new Image();
+      x.src = "https://via.placeholder.com/200x400";
+      g.appendChild(x);
+    });
+
+    // İndir / Kaldır
+    let pct = 0, st = "indir";
+    b.onclick = () => {
+      if (st === "indir") {
+        b.disabled = true;
+        l.style.transform = "scale(.7)";
+        p.style.display = "block";
+        let iv = setInterval(() => {
+          pct++;
+          p.querySelector(".fg").style.strokeDashoffset = 314 - 314 * pct / 100;
+          b.textContent = pct + "%";
+          if (pct === 100) {
+            clearInterval(iv);
+            l.style.transform = "";
+            p.style.display = "none";
+            b.disabled = false;
+            b.textContent = "Kaldır";
+            st = "kaldir";
+          }
+        }, 20);
+      } else {
+        st = "indir";
+        b.textContent = "İndir";
+      }
+    };
+
+    // Yıldız & yorum
+    const stars = document.querySelectorAll(".star"),
+          ov = d, sendBtn = n, list = q;
+    stars.forEach(sx => sx.onclick = () => {
+      const v = +sx.dataset.val;
+      stars.forEach(y => y.classList.toggle("filled", +y.dataset.val <= v));
+      ov.classList.add("open");
+      ht.textContent = v + "★ Seçtiniz";
+    });
+
+    sendBtn.onclick = () => {
+      const txt = i.value.trim();
+      if (!txt) return;
+      const dt = txt.length > 100 ? txt.slice(0,100) + "...Daha fazla görüntüle" : txt;
+      const el = document.createElement("div");
+      el.className = "comment-item";
+      el.innerHTML = `<div class="id">#${Math.random().toString(36).substr(2,10)}</div>
+                      <div class="text">${dt}</div>`;
+      list.prepend(el);
+      if (list.childElementCount > 3 && !document.querySelector(".more-btn")) {
+        const mb = document.createElement("button");
+        mb.className = "more-btn";
+        mb.textContent = "Tüm yorumları gör";
+        mb.onclick = () => window.location.href = "/comments.html";
+        document.querySelector(".rating-card").appendChild(mb);
+      }
+      i.value = "";
+      ov.classList.remove("open");
+      stars.forEach(y => y.classList.remove("filled"));
+      el.querySelector(".text").onclick = () => alert(txt);
+    };
+
+    ov.onclick = e => e.target === ov && ov.classList.remove("open");
+  </script>
+
 </body>
-</html>
+    </html>
+    
