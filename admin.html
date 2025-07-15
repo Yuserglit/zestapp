@@ -11,7 +11,7 @@ body{font-family:'Playfair Display',serif;background:rgba(224,233,255,0.6);displ
 #lc{background:rgba(255,255,255,0.8);backdrop-filter:blur(12px);border-radius:20px;padding:24px;box-shadow:0 8px 24px rgba(0,0,0,0.1);text-align:center;width:360px}
 #lc h2{margin-bottom:16px;font-size:1.4rem}
 #lc input{width:100%;padding:12px;margin:10px 0;border:1px solid rgba(0,0,0,0.2);border-radius:8px;font-size:1rem}
-#lc button{width:100%;padding:14px;margin-top:20px;border:none;border-radius:30px;background:linear-gradient(135deg,#4A90E2,#357ABD);color:#fff;font-weight:700;cursor:pointer}
+#lc button{width:100%;padding:14px;margin-top:20px;border:none;border-radius:30px;background:linear-gradient(135deg,#4A90E2,#357ABD);color:#fff;font-weight:700;cursor:pointer;opacity:0.5}
 #lc .st{margin-top:16px;font-weight:700}
 #ap{display:none;flex-direction:column;height:100vh;width:100%;overflow:hidden}
 #ap .hdr{position:relative;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.6);backdrop-filter:blur(12px);padding:0 20px;height:60px;z-index:1000}
@@ -33,76 +33,22 @@ body{font-family:'Playfair Display',serif;background:rgba(224,233,255,0.6);displ
 .prv{display:flex;flex-wrap:wrap;margin-top:12px}
 .prv img{max-width:80px;border-radius:12px;margin:8px}
 </style>
-</head>
-<body>
-<div id="lc">
-<h2>Admin Girişi</h2>
-<input id="e" type="email" placeholder="Gmail girin">
-<button id="l" disabled>Giriş Yap</button>
-<div class="st" id="st"></div>
-</div>
-
-<div id="ap">
-<div class="hdr">
-<div class="t">Admin Paneli</div>
-<div class="h" id="h">≡</div>
-<div class="dd" id="d">
-<button data-p="a">AAB Yükle</button>
-<button data-p="i">Resim Yükle</button>
-<button data-p="l2">Logo Yükle</button>
-<button data-p="d2">Açıklama</button>
-</div>
-</div>
-<div class="ct">
-<div id="panel-a" class="panel active">
-<div class="card">
-<h3>AAB Dosyası Yükle</h3>
-<label>Seç .aab:</label>
-<input type="file" id="aab" accept=".aab">
-<div class="pb"><div id="pb1"></div></div>
-<button id="up1">Yükle</button>
-<p id="s1" style="margin-top:12px"></p>
-</div>
-</div>
-<div id="panel-i" class="panel">
-<div class="card">
-<h3>Resim Yükle</h3>
-<label>jpg/png (9:16):</label>
-<input type="file" id="img" accept="image/*" multiple>
-<div class="prv" id="pv"></div>
-<button id="up2">Yükle</button>
-</div>
-</div>
-<div id="panel-l2" class="panel">
-<div class="card">
-<h3>Logo Yükle</h3>
-<label>png/jpg:</label>
-<input type="file" id="lg" accept="image/*">
-<div class="prv" id="pv2"></div>
-<button id="up3">Yükle</button>
-</div>
-</div>
-<div id="panel-d2" class="panel">
-<div class="card">
-<h3>Açıklama</h3>
-<textarea id="dc" rows="4"></textarea>
-<button id="up4">Kaydet</button>
-<p id="s4" style="margin-top:12px"></p>
-</div>
-</div>
-</div>
-</div>
-
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script>
 const TARGET_EMAIL = 'ezizaranow721@gmail.com';
-const BREVO_KEY = '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';
+const EMAILJS_KEY = '7wLI4FJZFClLHNP_U';
+const SERVICE_ID   = 'service_ufnn2yj';
+const TEMPLATE_ID  = 'template_f8nuf7l';
 let verificationCode = '';
 
-const lc  = document.getElementById('lc');
-const ap  = document.getElementById('ap');
-const e   = document.getElementById('e');
-const l   = document.getElementById('l');
-const st  = document.getElementById('st');
+emailjs.init(EMAILJS_KEY);
+
+document.addEventListener('DOMContentLoaded', ()=>{ 
+const lc = document.getElementById('lc'); 
+const ap = document.getElementById('ap'); 
+const e  = document.getElementById('e'); 
+const l  = document.getElementById('l'); 
+const st = document.getElementById('st');
 
 if (localStorage.getItem('adminLogged') === 'true') {
   lc.style.display = 'none';
@@ -119,118 +65,157 @@ e.oninput = () => {
   }
 };
 
-l.onclick = async () => {
+l.onclick = () => {
   if (e.value.trim() !== TARGET_EMAIL) return;
-
   verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
   st.textContent = 'Kod gönderiliyor...';
   l.disabled = true;
 
-  await fetch('https://api.brevo.com/v3/smtp/email', {
-    method: 'POST',
-    headers: {
-      'api-key': BREVO_KEY,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      sender: { name: 'ZestApp', email: 'no-reply@zest.app' },
-      to: [{ email: TARGET_EMAIL }],
-      subject: 'Doğrulama Kodu',
-      htmlContent: `<h3>Kodunuz: ${verificationCode}</h3>`
-    })
-  });
-
-  st.textContent = 'Kod gönderildi. Aşağıya girin.';
-  addCodeInput();
+  emailjs.send(SERVICE_ID, TEMPLATE_ID, { to_email: TARGET_EMAIL, code: verificationCode })
+    .then(()=>{
+      st.textContent = 'Kod gönderildi. Aşağıya girin.';
+      addCodeInput();
+    });
 };
 
-function addCodeInput() {
+function addCodeInput(){
   if (document.getElementById('code')) return;
-
   const codeInput = document.createElement('input');
-  codeInput.id = 'code';
-  codeInput.type = 'text';
+  codeInput.id = 'code'; codeInput.type = 'text';
   codeInput.placeholder = 'Gelen kodu gir';
-  codeInput.style.width = '100%';
-  codeInput.style.padding = '12px';
-  codeInput.style.marginTop = '12px';
-  codeInput.style.borderRadius = '8px';
+  Object.assign(codeInput.style, {width:'100%',padding:'12px',marginTop:'12px',borderRadius:'8px'});
   lc.appendChild(codeInput);
 
   const verifyBtn = document.createElement('button');
-  verifyBtn.id = 'verify';
-  verifyBtn.textContent = 'Doğrula';
-  verifyBtn.style.marginTop = '10px';
-  verifyBtn.style.width = '100%';
-  verifyBtn.style.padding = '12px';
-  verifyBtn.style.borderRadius = '30px';
-  verifyBtn.style.background = 'linear-gradient(135deg,#4A90E2,#357ABD)';
-  verifyBtn.style.color = '#fff';
-  verifyBtn.style.fontWeight = '700';
+  verifyBtn.id = 'verify'; verifyBtn.textContent = 'Doğrula';
+  Object.assign(verifyBtn.style, {marginTop:'10px',width:'100%',padding:'12px',borderRadius:'30px',background:'linear-gradient(135deg,#4A90E2,#357ABD)',color:'#fff',fontWeight:'700'});
   lc.appendChild(verifyBtn);
 
   verifyBtn.onclick = () => {
     if (codeInput.value.trim() === verificationCode) {
-      localStorage.setItem('adminLogged', 'true');
+      localStorage.setItem('adminLogged','true');
       lc.style.display = 'none';
       ap.style.display = 'flex';
     } else {
-      st.textContent = '❌ Kod yanlış';
-      st.style.color = 'red';
+      st.textContent = '❌ Kod yanlış'; st.style.color = 'red';
     }
   };
 }
 
-// mevcut admin panel işlevleri
-h.onclick = _ => d.style.display = d.style.display === 'flex' ? 'none' : 'flex';
-d.style.flexDirection = 'column';
-d.querySelectorAll('button').forEach(b => b.onclick = _ => {
-  document.querySelectorAll('.panel').forEach(x => x.classList.remove('active'));
-  document.getElementById('panel-' + b.dataset.p).classList.add('active');
-  d.style.display = 'none';
+});
+</script>
+</head>
+<body>
+<div id="lc">
+  <h2>Admin Girişi</h2>
+  <input id="e" type="email" placeholder="Gmail girin">
+  <button id="l" disabled>Giriş Yap</button>
+  <div class="st" id="st"></div>
+</div>
+
+<div id="ap">
+  <div class="hdr">
+    <div class="t">Admin Paneli</div>
+    <div class="h" id="h">≡</div>
+    <div class="dd" id="d">
+      <button data-p="a">AAB Yükle</button>
+      <button data-p="i">Resim Yükle</button>
+      <button data-p="l2">Logo Yükle</button>
+      <button data-p="d2">Açıklama</button>
+    </div>
+  </div>
+  <div class="ct">
+    <div id="panel-a" class="panel active">
+      <div class="card">
+        <h3>AAB Dosyası Yükle</h3>
+        <label>Seç .aab:</label>
+        <input type="file" id="aab" accept=".aab">
+        <div class="pb"><div id="pb1"></div></div>
+        <button id="up1">Yükle</button>
+        <p id="s1" style="margin-top:12px"></p>
+      </div>
+    </div>
+    <div id="panel-i" class="panel">
+      <div class="card">
+        <h3>Resim Yükle</h3>
+        <label>jpg/png (9:16):</label>
+        <input type="file" id="img" accept="image/*" multiple>
+        <div class="prv" id="pv"></div>
+        <button id="up2">Yükle</button>
+      </div>
+    </div>
+    <div id="panel-l2" class="panel">
+      <div class="card">
+        <h3>Logo Yükle</h3>
+        <label>png/jpg:</label>
+        <input type="file" id="lg" accept="image/*">
+        <div class="prv" id="pv2"></div>
+        <button id="up3">Yükle</button>
+      </div>
+    </div>
+    <div id="panel-d2" class="panel">
+      <div class="card">
+        <h3>Açıklama</h3>
+        <textarea id="dc" rows="4"></textarea>
+        <button id="up4">Kaydet</button>
+        <p id="s4" style="margin-top:12px"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const hbtn = document.getElementById('h'), dd = document.getElementById('d');
+hbtn.onclick=_=> dd.style.display = dd.style.display==='flex'?'none':'flex';
+dd.style.flexDirection = 'column';
+dd.querySelectorAll('button').forEach(b=> b.onclick=_=>{
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+  document.getElementById('panel-'+b.dataset.p).classList.add('active');
+  dd.style.display='none';
 });
 
+// Yükleme ve önizleme kodları
 up1.onclick = _ => {
   let f = aab.files[0], s = s1, p = pb1;
-  if (!f || !f.name.endsWith('.aab')) { s.textContent = 'Geçerli'; return }
+  if (!f || !f.name.endsWith('.aab')) { s.textContent = 'Geçerli dosya seç'; return }
   let i = 0; s.textContent = ''; p.style.width = '0%';
-  let iv = setInterval(_ => {
-    i += 10; p.style.width = i + '%';
-    if (i >= 100) { clearInterval(iv); s.textContent = f.name + ' yüklendi' }
-  }, 200)
+  let iv = setInterval(_=>{
+    i+=10; p.style.width = i+'%';
+    if (i>=100) { clearInterval(iv); s.textContent=f.name+' yüklendi' }
+  },200)
 };
 
 img.onchange = e => {
-  pv.innerHTML = '';
-  [...e.target.files].forEach(f => {
-    if (f.type.startsWith('image/')) {
-      let i = new Image();
-      i.onload = () => {
-        if (i.naturalWidth * 16 === i.naturalHeight * 9) {
-          i.style.cssText = 'margin:8px;border-radius:12px;max-width:80px';
+  pv.innerHTML='';
+  [...e.target.files].forEach(f=>{
+    if(f.type.startsWith('image/')){
+      let i=new Image();
+      i.onload=()=>{
+        if(i.naturalWidth*16===i.naturalHeight*9){
+          i.style.cssText='margin:8px;border-radius:12px;max-width:80px';
           pv.appendChild(i);
-        } else alert('Yalnız 9:16 resim kabul edilir');
+        }else alert('Yalnız 9:16 resim kabul edilir');
       };
-      i.src = URL.createObjectURL(f)
+      i.src=URL.createObjectURL(f)
     }
   })
 };
 
-up2.onclick = _ => alert(pv.children.length ? 'Yüklendi' : 'Seçim');
+up2.onclick = _=> alert(pv.children.length?'Yüklendi':'Seçim yap');
 lg.onchange = e => {
-  pv2.innerHTML = '';
-  let f = e.target.files[0];
-  if (f && f.type.startsWith('image/')) {
-    let i = new Image();
-    i.onload = () => { pv2.appendChild(i) };
-    i.src = URL.createObjectURL(f);
-    i.style.cssText = 'margin:8px;border-radius:12px;max-width:80px';
+  pv2.innerHTML='';
+  let f=e.target.files[0];
+  if(f&&f.type.startsWith('image/')){
+    let i=new Image();
+    i.onload=()=>{ pv2.appendChild(i) };
+    i.src=URL.createObjectURL(f);
+    i.style.cssText='margin:8px;border-radius:12px;max-width:80px';
   }
 };
 
-up3.onclick = _ => alert('Logo yüklendi');
-up4.onclick = _ => {
-  if (dc.value.trim()) { s4.textContent = 'Kaydedildi' } else alert('Boş')
+up3.onclick = _=> alert('Logo yüklendi');
+up4.onclick = _=> {
+  if(dc.value.trim()){ s4.textContent='Kaydedildi' }else alert('Boş')
 };
 </script>
 </body>
