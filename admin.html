@@ -181,14 +181,13 @@ function addCodeInput() {
   };
 }
 
-// mevcut panel kodları
-let hbtn = document.getElementById('h'), dd = document.getElementById('d');
-hbtn.onclick = _ => dd.style.display = dd.style.display === 'flex' ? 'none' : 'flex';
-dd.style.flexDirection = 'column';
-dd.querySelectorAll('button').forEach(b => b.onclick = _ => {
+// mevcut admin panel işlevleri
+h.onclick = _ => d.style.display = d.style.display === 'flex' ? 'none' : 'flex';
+d.style.flexDirection = 'column';
+d.querySelectorAll('button').forEach(b => b.onclick = _ => {
   document.querySelectorAll('.panel').forEach(x => x.classList.remove('active'));
   document.getElementById('panel-' + b.dataset.p).classList.add('active');
-  dd.style.display = 'none';
+  d.style.display = 'none';
 });
 
 up1.onclick = _ => {
