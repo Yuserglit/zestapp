@@ -1,1 +1,300 @@
-<!DOCTYPE html><html lang="tr"><head><meta charset="UTF-8"><meta name="viewport"content="width=device-width,initial-scale=1"><title>ZestApp–Program</title><link rel="icon" href="web-uygulaması-bildirimi-512x512.png" sizes="512x512"><meta name="description"content="Zest bilen hem gazanç ediň, hem bilimiňizi ösüşdiriň, hem aýdym diňlaň hemde reklama ediň!"><meta name="keywords"content="Zest,gazanç,online müzik,apk,çalar,pul,ücretsiz müzik,dinle"><meta name="author"content="Yuserglit"><meta name="theme-color"content="#000"><meta property="og:title"content="ZestApp"><meta property="og:description"content="Zest muğut aýdym diňlemek ve gazanç etme programasy."><meta property="og:image"content="https://www.zest.app.tc/web-uygulaması-bildirimi-512x512.png"><meta property="og:url"content="https://www.zest.app.tc"><meta property="og:type"content="website"><meta name="twitter:card"content="summary_large_image"><meta name="twitter:title"content="ZestApp"><meta name="twitter:description"content="Zest app muğut aýdym diňlemek ve pul gazanmak."><meta name="twitter:image"content="https://www.zest.app.tc/web-uygulaması-bildirimi-512x512.png"><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap"rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Playfair Display',serif;background:linear-gradient(135deg,rgba(240,248,255,0.6),rgba(224,255,255,0.6));color:#222;overflow-x:hidden;height:100vh}header{position:fixed;top:0;left:0;right:0;height:60px;background:rgba(255,255,255,0.4);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:100}h1{font-size:1.5rem;font-weight:700}.hb{font-size:1.8rem;cursor:pointer}.mo{position:fixed;top:0;left:0;width:60%;height:100%;background:rgba(255,255,255,0.6);backdrop-filter:blur(16px);transform:translateX(-100%);transition:transform .3s;padding:80px 20px;z-index:90}.mo.open{transform:translateX(0)}.mo button{width:100%;margin:15px 0;padding:14px;font-size:1.1rem;border:2px solid rgba(0,0,0,0.2);border-radius:12px;background:rgba(255,255,255,0.8);color:#222;cursor:pointer}.main{padding:80px 20px 20px;max-width:480px;margin:0 auto;overflow-y:auto}.c{background:rgba(255,255,255,0.5);backdrop-filter:blur(12px);border-radius:24px;padding:24px 20px;box-shadow:0 8px 24px rgba(0,0,0,0.1);margin-bottom:20px}.hr{display:flex;align-items:center;gap:16px}.lw{position:relative;width:100px;height:100px}.lg{width:100%;height:100%;border-radius:50%;background:#fff center/cover no-repeat;transition:transform .5s}.pc{position:absolute;top:0;left:0;width:100px;height:100px;transform:rotate(-90deg);display:none}.pc circle{fill:none;stroke-width:6}.pc .bg{stroke:rgba(0,0,0,0.1)}.pc .fg{stroke:#4A90E2;stroke-dasharray:314;stroke-dashoffset:314;transition:stroke-dashoffset .3s}.info{flex:1}.title{font-size:1.8rem;font-weight:700;margin-bottom:6px}.stats{font-size:0.9rem;opacity:0.8}.stats span+span::before{content:" | ";color:#555}.btn{display:block;width:100%;padding:14px;margin-top:20px;font-size:1.2rem;font-weight:700;border:none;border-radius:30px;background:linear-gradient(135deg,#4A90E2,#357ABD);color:#fff;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2)}.gal{display:flex;overflow-x:auto;gap:12px}.gal img{width:140px;height:280px;object-fit:cover;border-radius:16px;border:2px solid rgba(0,0,0,0.1);flex-shrink:0}.dc .t{font-size:1.2rem;font-weight:700;margin-bottom:8px}.tw{max-height:80px;overflow-y:auto;padding-right:8px}.tw .text{font-size:1rem;line-height:1.4}.stars{display:flex;justify-content:center;gap:8px;margin-bottom:12px}.star{font-size:2rem;cursor:pointer;color:#888;transition:color .2s}.star.filled{color:gold}.co{position:fixed;bottom:0;left:0;width:100%;height:50%;background:rgba(255,255,255,0.8);backdrop-filter:blur(16px);transform:translateY(100%);transition:transform .3s;padding:20px;z-index:200}.co.open{transform:translateY(0)}.co h3{text-align:center;margin-bottom:12px;font-size:1.2rem}.co textarea{width:100%;height:80px;padding:8px;border-radius:10px;font-size:1rem;resize:none;border:1px solid rgba(0,0,0,0.2)}.send{margin-top:12px;width:100%;padding:12px;background:#4A90E2;color:#fff;border:none;border-radius:8px;font-size:1rem;cursor:pointer}.clist{max-height:200px;overflow-y:auto}.citem{background:rgba(255,255,255,0.6);border-radius:12px;padding:10px;margin:8px 0;box-shadow:0 4px 12px rgba(0,0,0,0.1)}.citem .stars-c{margin-bottom:6px}.citem .id{font-size:0.8rem;opacity:0.7;margin-bottom:4px}.more{width:100%;padding:10px;margin-top:10px;border:none;border-radius:20px;background:#357ABD;color:#fff;font-size:1rem;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2)}</style></head><body><header><h1>Zest App</h1><div class="hb"id="h">≡</div></header><div class="mo"id="o"><button id="c">İletişim</button><button id="s">Paylaş</button><button id="a">Admin</button></div><div class="main"id="m"><div class="c"><div class="hr"><div class="lw"><div class="lg"id="l"></div><svg class="pc"id="p"viewBox="0 0 100 100"><circle class="bg"cx="50"cy="50"r="48"/><circle class="fg"cx="50"cy="50"r="48"/></svg></div><div class="info"><div class="title">StarMaker</div><div class="stats"><span>500M+</span><span>146MB</span><span>12+</span><span>4.4★</span></div></div></div><button class="btn"id="b">İndir</button></div><div class="c gal"id="g"></div><div class="c dc"><div class="t">Açıklama</div><div class="tw"><div class="text">Karaoke söyle...</div></div></div><div class="c"><div class="stars"id="t"><span class="star"data-val="1">☆</span><span class="star"data-val="2">☆</span><span class="star"data-val="3">☆</span><span class="star"data-val="4">☆</span><span class="star"data-val="5">☆</span></div><div class="clist"id="q"></div></div></div><div class="co"id="d"><h3 id="ht">Yorum</h3><textarea id="i"maxlength="500"></textarea><button class="send"id="n">Gönder</button></div><script>h.onclick=_=>o.classList.toggle("open");o.onclick=e=>e.target===o&&o.classList.remove("open");c.onclick=_=>location.href="mailto:cmsupporjs@gmail.com";s.onclick=_=>{if(navigator.share){navigator.share({title:document.title,text:"Bu siteyi incele:",url:location.href})}else{alert("Paylaşım desteklenmiyor.")}};a.onclick=_=>location.href="admin.html";["","","",""].forEach(_=>{let i=new Image();i.src="https://via.placeholder.com/200x400";g.appendChild(i)});let pct=0,iv,st="indir";b.onclick=_=>{if(st==="indir"){pct=0;clearInterval(iv);b.disabled=1;l.style.transform="scale(.7)";p.style.display="block";iv=setInterval(_=>{pct=pct<100?pct+1:100;p.querySelector(".fg").style.strokeDashoffset=314-314*pct/100;b.textContent=pct+"%";if(pct===100){clearInterval(iv);p.style.display="none";b.disabled=0;b.textContent="Kaldır";st="kaldir"}},20)}else{st="indir";b.textContent="İndir"}};let stars=document.querySelectorAll(".star"),ov=d,send=n,list=q,R=0;stars.forEach(sx=>sx.onclick=_=>{R=+sx.dataset.val;stars.forEach(s2=>s2.classList.toggle("filled",+s2.dataset.val<=R));ov.classList.add("open");ht.textContent=R+"★"});send.onclick=_=>{let t=i.value.trim();if(!t)return;let d=t.length>100?t.slice(0,100)+"...":t;let id=Math.random().toString(36).substr(2,10),el=document.createElement("div");el.className="citem";el.innerHTML=`<div class="stars-c">${"★".repeat(R)}</div><div class="id">#${id}</div><div class="text">${d}</div>`;list.prepend(el);if(list.childElementCount>3&&!document.querySelector(".more")){let m=document.createElement("button");m.className="more";m.textContent="Tüm yorumlar";m.onclick=_=>location.href="/comments.html";document.querySelector(".c:last-child").appendChild(m)}i.value="";ov.classList.remove("open");stars.forEach(s2=>s2.classList.remove("filled"));el.querySelector(".text").onclick=_=>alert(t)};ov.onclick=e=>e.target===ov&&ov.classList.remove("open")</script></body></html>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ZestApp – Program</title>
+  <link rel="icon" href="web-uygulaması-bildirimi-512x512.png" sizes="512x512">
+  <meta name="theme-color" content="#000">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* === Orijinal CSS’in tamamı === */
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Playfair Display',serif;background:linear-gradient(135deg,rgba(240,248,255,0.6),rgba(224,255,255,0.6));color:#222;overflow-x:hidden;height:100vh}
+    header{position:fixed;top:0;left:0;right:0;height:60px;background:rgba(255,255,255,0.4);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:100}
+    h1{font-size:1.5rem;font-weight:700}
+    .hb{font-size:1.8rem;cursor:pointer}
+    .mo{position:fixed;top:0;left:0;width:60%;height:100%;background:rgba(255,255,255,0.6);backdrop-filter:blur(16px);transform:translateX(-100%);transition:transform .3s;padding:80px 20px;z-index:90}
+    .mo.open{transform:translateX(0)}
+    .mo button{width:100%;margin:15px 0;padding:14px;font-size:1.1rem;border:2px solid rgba(0,0,0,0.2);border-radius:12px;background:rgba(255,255,255,0.8);color:#222;cursor:pointer}
+    .main{padding:80px 20px 20px;max-width:480px;margin:0 auto;overflow-y:auto}
+    .c{background:rgba(255,255,255,0.5);backdrop-filter:blur(12px);border-radius:24px;padding:24px 20px;box-shadow:0 8px 24px rgba(0,0,0,0.1);margin-bottom:20px}
+    .hr{display:flex;align-items:center;gap:16px}
+    .lw{position:relative;width:100px;height:100px}
+    .lg{width:100%;height:100%;border-radius:50%;background:#fff center/cover no-repeat;transition:transform .5s}
+    .pc{position:absolute;top:0;left:0;width:100px;height:100px;transform:rotate(-90deg);display:none}
+    .pc circle{fill:none;stroke-width:6}
+    .pc .bg{stroke:rgba(0,0,0,0.1)}
+    .pc .fg{stroke:#4A90E2;stroke-dasharray:314;stroke-dashoffset:314;transition:stroke-dashoffset .3s}
+    .info{flex:1}
+    .title{font-size:1.8rem;font-weight:700;margin-bottom:6px}
+    .stats{font-size:0.9rem;opacity:0.8}
+    .stats span+span::before{content:" | ";color:#555}
+    .btn{display:block;width:100%;padding:14px;margin-top:20px;font-size:1.2rem;font-weight:700;border:none;border-radius:30px;background:linear-gradient(135deg,#4A90E2,#357ABD);color:#fff;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2)}
+    .gal{display:flex;overflow-x:auto;gap:12px}
+    .gal img{width:140px;height:280px;object-fit:cover;border-radius:16px;border:2px solid rgba(0,0,0,0.1);flex-shrink:0}
+    .dc .t{font-size:1.2rem;font-weight:700;margin-bottom:8px}
+    .tw{max-height:80px;overflow-y:auto;padding-right:8px}
+    .tw .text{font-size:1rem;line-height:1.4}
+    .stars{display:flex;justify-content:center;gap:8px;margin-bottom:12px}
+    .star{font-size:2rem;cursor:pointer;color:#888;transition:color .2s}
+    .star.filled{color:gold}
+    .co{position:fixed;bottom:0;left:0;width:100%;height:50%;background:rgba(255,255,255,0.8);backdrop-filter:blur(16px);transform:translateY(100%);transition:transform .3s;padding:20px;z-index:200}
+    .co.open{transform:translateY(0)}
+    .co h3{text-align:center;margin-bottom:12px;font-size:1.2rem}
+    .co textarea{width:100%;height:80px;padding:8px;border-radius:10px;font-size:1rem;resize:none;border:1px solid rgba(0,0,0,0.2)}
+    .send{margin-top:12px;width:100%;padding:12px;background:#4A90E2;color:#fff;border:none;border-radius:8px;font-size:1rem;cursor:pointer}
+    .clist{max-height:200px;overflow-y:auto}
+    .citem{background:rgba(255,255,255,0.6);border-radius:12px;padding:10px;margin:8px 0;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+    .citem .stars-c{margin-bottom:6px}
+    .citem .id{font-size:0.8rem;opacity:0.7;margin-bottom:4px}
+    .more{width:100%;padding:10px;margin-top:10px;border:none;border-radius:20px;background:#357ABD;color:#fff;font-size:1rem;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2)}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Zest App</h1>
+    <div class="hb" id="h">≡</div>
+  </header>
+
+  <!-- Toolbar -->
+  <div class="mo" id="o">
+    <button id="c">İletişim</button>
+    <button id="s">Paylaş</button>
+    <button id="a">Admin</button>
+  </div>
+
+  <div class="main" id="m">
+    <div class="c">
+      <div class="hr">
+        <div class="lw">
+          <div class="lg" id="l"></div>
+          <svg class="pc" id="p" viewBox="0 0 100 100">
+            <circle class="bg" cx="50" cy="50" r="48"/>
+            <circle class="fg" cx="50" cy="50" r="48"/>
+          </svg>
+        </div>
+        <div class="info">
+          <div class="title" id="title">StarMaker</div>
+          <div class="stats">
+            <span id="stat-download">500M+</span>
+            <span id="stat-size">146MB</span>
+            <span id="stat-age">12+</span>
+            <span id="stat-rating">4.4★</span>
+          </div>
+        </div>
+      </div>
+      <button class="btn" id="b">İndir</button>
+    </div>
+
+    <!-- Galeri -->
+    <div class="c gal" id="g"></div>
+
+    <div class="c dc">
+      <div class="t">Açıklama</div>
+      <div class="tw">
+        <div class="text" id="description">Karaoke söyle...</div>
+      </div>
+    </div>
+
+    <div class="c">
+      <div class="stars" id="t">
+        <span class="star" data-val="1">☆</span>
+        <span class="star" data-val="2">☆</span>
+        <span class="star" data-val="3">☆</span>
+        <span class="star" data-val="4">☆</span>
+        <span class="star" data-val="5">☆</span>
+      </div>
+      <div class="clist" id="q"></div>
+      <button class="more" id="btnMoreComments" style="display:none">Tüm yorumlar</button>
+    </div>
+  </div>
+
+  <div class="co" id="d">
+    <h3 id="ht">Yorum</h3>
+    <textarea id="i" maxlength="500"></textarea>
+    <button class="send" id="n">Gönder</button>
+  </div>
+
+  <!-- Firebase SDK’ları -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import {
+      getDatabase, ref, child, get, push, set, runTransaction
+    } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBDTaO6Wk4vY_lcAFdvjs-3ymHDplup_40",
+      authDomain: "zestappsite-8f333.firebaseapp.com",
+      databaseURL: "https://zestappsite-8f333-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "zestappsite-8f333",
+      storageBucket: "zestappsite-8f333.firebasestorage.app",
+      messagingSenderId: "4103904597",
+      appId: "1:4103904597:web:cdff0ab98ccea316d663dc",
+      measurementId: "G-2PS6YHN55W"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const basePath = 'program/zest';
+
+    // Elementler
+    const logoEl    = document.getElementById('l');
+    const titleEl   = document.getElementById('title');
+    const dlEl      = document.getElementById('stat-download');
+    const sizeEl    = document.getElementById('stat-size');
+    const ageEl     = document.getElementById('stat-age');
+    const rateEl    = document.getElementById('stat-rating');
+    const descEl    = document.getElementById('description');
+    const galEl     = document.getElementById('g');
+    const btnDl     = document.getElementById('b');
+    const pctSvg    = document.getElementById('p');
+    const fgCircle  = pctSvg.querySelector('.fg');
+    const starsEls  = [...document.querySelectorAll('.star')];
+    const commentsEl= document.getElementById('q');
+    const btnMore   = document.getElementById('btnMoreComments');
+    const overlay   = document.getElementById('d');
+    const overlayT  = document.getElementById('ht');
+    const overlayTa = document.getElementById('i');
+    const overlayS  = document.getElementById('n');
+
+    let selectedRating = 0;
+
+    async function loadData(){
+      const snap = await get(child(ref(db), basePath));
+      if(!snap.exists()) return;
+      const data = snap.val();
+
+      // Başlık & logo
+      titleEl.textContent = data.name || titleEl.textContent;
+      if(data.logoUrl) logoEl.style.backgroundImage = `url(${data.logoUrl})`;
+
+      // Stats
+      sizeEl.textContent  = data.size     || sizeEl.textContent;
+      ageEl.textContent   = data.age      || ageEl.textContent;
+      dlEl.textContent    = formatDownload(data.downloadCount||0);
+      rateEl.textContent  = (data.ratingAvg||parseFloat(rateEl.textContent)) + '★';
+
+      // Açıklama
+      descEl.textContent  = data.description || descEl.textContent;
+
+      // Galeri (placeholder veya gerçek URL listesi data.galleryUrls olabilir)
+      galEl.innerHTML = '';
+      (data.galleryUrls||["","","",""]).forEach(url=>{
+        const img = document.createElement('img');
+        img.src = url || 'https://via.placeholder.com/200x400';
+        galEl.appendChild(img);
+      });
+
+      // Yorumları yükle
+      await loadComments();
+    }
+
+    function formatDownload(n){
+      if(n<10) return String(n);
+      if(n<50) return '10+';
+      if(n<100) return '50+';
+      if(n<500) return '100+';
+      if(n<1000) return '500+';
+      if(n<10000) return '1B+';
+      if(n<50000) return '10B+';
+      if(n<100000) return '50B+';
+      if(n<1000000) return '100B+';
+      return '1M+';
+    }
+
+    // loadComments ve prependComment
+    async function loadComments(){
+      commentsEl.innerHTML='';
+      const snap = await get(child(ref(db), `${basePath}/comments`));
+      if(!snap.exists()) return;
+      const list = Object.values(snap.val());
+      const showAll = list.length>3;
+      btnMore.style.display = showAll?'block':'none';
+      const toShow = showAll? list.slice(-3): list;
+      toShow.forEach(c=> prependComment(c));
+    }
+    function prependComment(c){
+      const div = document.createElement('div');
+      div.className = 'citem';
+      div.innerHTML = `<div class="stars-c">${'★'.repeat(c.rating)}</div>
+                       <div class="id">#${c.id}</div>
+                       <div class="text">${c.text}</div>`;
+      commentsEl.prepend(div);
+    }
+    btnMore.onclick = ()=>{ loadCommentsAll(); btnMore.style.display='none'; };
+    async function loadCommentsAll(){
+      commentsEl.innerHTML='';
+      const snap = await get(child(ref(db), `${basePath}/comments`));
+      if(!snap.exists()) return;
+      Object.values(snap.val()).forEach(c=> prependComment(c));
+    }
+
+    // İndir butonu
+    btnDl.onclick = ()=>{
+      let pct=0, state='indir', iv;
+      if(state==='indir'){
+        clearInterval(iv);
+        btnDl.disabled=true; logoEl.style.transform='scale(.7)'; pctSvg.style.display='block';
+        iv = setInterval(async ()=>{
+          pct = pct<100? pct+1:100;
+          fgCircle.style.strokeDashoffset = 314-314*pct/100;
+          btnDl.textContent = pct+'%';
+          if(pct===100){
+            clearInterval(iv);
+            pctSvg.style.display='none';
+            btnDl.disabled=false;
+            btnDl.textContent='Kaldır';
+            state='kaldir';
+            // DB++
+            await runTransaction(ref(db, `${basePath}/downloadCount`), n=>(n||0)+1);
+            // Güncel göster
+            const snap2 = await get(child(ref(db), basePath));
+            dlEl.textContent = formatDownload(snap2.val().downloadCount||0);
+          }
+        },20);
+      } else {
+        state='indir'; btnDl.textContent='İndir'; logoEl.style.transform='';
+      }
+    };
+
+    // Yorum overlay
+    starsEls.forEach(s=>{
+      s.onclick = ()=>{
+        selectedRating = +s.dataset.val;
+        starsEls.forEach(x=> x.classList.toggle('filled', +x.dataset.val<=selectedRating));
+        overlayT.textContent = selectedRating+'★';
+        overlay.classList.add('open');
+      };
+    });
+    overlayS.onclick = async ()=>{
+      const text = overlayTa.value.trim();
+      if(!text||!selectedRating) return;
+      const newRef = push(ref(db, `${basePath}/comments`));
+      const id = newRef.key;
+      await set(newRef, { id, rating:selectedRating, text });
+      overlayTa.value=''; overlay.classList.remove('open');
+      prependComment({ id, rating:selectedRating, text });
+      // Ortalama güncelle
+      const snap = await get(child(ref(db), `${basePath}/comments`));
+      const avg = Math.max(
+        Object.values(snap.val()).reduce((a,b)=>a+ b.rating, 0) / Object.values(snap.val()).length,
+        3.3
+      );
+      await set(ref(db, `${basePath}/ratingAvg`), avg);
+      rateEl.textContent = avg.toFixed(1)+'★';
+    };
+    overlay.onclick = e=>{ if(e.target===overlay) overlay.classList.remove('open'); };
+
+    // Toolbar & share & admin
+    document.getElementById('h').onclick = ()=> document.getElementById('o').classList.toggle('open');
+    document.getElementById('o').onclick = e=> e.target===document.getElementById('o')&&document.getElementById('o').classList.remove('open');
+    document.getElementById('c').onclick = ()=> location.href="mailto:cmsupporjs@gmail.com";
+    document.getElementById('s').onclick = ()=> navigator.share? navigator.share({title:document.title,text:"Bu site:",url:location.href}) : alert("Paylaşım desteklenmiyor.");
+    document.getElementById('a').onclick = ()=> location.href="admin.html";
+
+    // İlk yükle
+    loadData();
+  </script>
+</body>
+  </html>
+  
