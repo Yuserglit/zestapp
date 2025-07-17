@@ -1,122 +1,173 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8"><meta name="viewport"content="width=device-width,initial-scale=1">
   <title>ZestApp – Program</title>
   <link rel="icon" href="web-uygulaması-bildirimi-512x512.png" sizes="512x512">
   <meta name="theme-color" content="#000">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* === Orijinal CSS’in tamamı === */
+    /* Loader */
+    #loader {
+      position:fixed;top:0;left:0;right:0;bottom:0;
+      background:rgba(255,255,255,0.8);
+      display:flex;align-items:center;justify-content:center;
+      z-index:9999;
+    }
+    .spinner {
+      width:50px;height:50px;
+      border:6px solid rgba(0,0,0,0.1);
+      border-top-color:#4A90E2;border-radius:50%;
+      animation:spin 1s infinite linear;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* Orijinal Stil */
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Playfair Display',serif;background:linear-gradient(135deg,rgba(240,248,255,0.6),rgba(224,255,255,0.6));color:#222;overflow-x:hidden;height:100vh}
-    header{position:fixed;top:0;left:0;right:0;height:60px;background:rgba(255,255,255,0.4);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:100}
+    body{font-family:'Playfair Display',serif;
+         background:linear-gradient(135deg,rgba(240,248,255,0.6),rgba(224,255,255,0.6));
+         color:#222;overflow-x:hidden;height:100vh}
+    header{position:fixed;top:0;left:0;right:0;height:60px;
+           background:rgba(255,255,255,0.4);backdrop-filter:blur(12px);
+           display:flex;align-items:center;justify-content:space-between;
+           padding:0 20px;z-index:100}
     h1{font-size:1.5rem;font-weight:700}
     .hb{font-size:1.8rem;cursor:pointer}
-    .mo{position:fixed;top:0;left:0;width:60%;height:100%;background:rgba(255,255,255,0.6);backdrop-filter:blur(16px);transform:translateX(-100%);transition:transform .3s;padding:80px 20px;z-index:90}
+    .mo{position:fixed;top:0;left:0;width:60%;height:100%;
+         background:rgba(255,255,255,0.6);backdrop-filter:blur(16px);
+         transform:translateX(-100%);transition:transform .3s;
+         padding:80px 20px;z-index:90}
     .mo.open{transform:translateX(0)}
-    .mo button{width:100%;margin:15px 0;padding:14px;font-size:1.1rem;border:2px solid rgba(0,0,0,0.2);border-radius:12px;background:rgba(255,255,255,0.8);color:#222;cursor:pointer}
+    .mo button{width:100%;margin:15px 0;padding:14px;
+               font-size:1.1rem;border:2px solid rgba(0,0,0,0.2);
+               border-radius:12px;background:rgba(255,255,255,0.8);
+               color:#222;cursor:pointer}
     .main{padding:80px 20px 20px;max-width:480px;margin:0 auto;overflow-y:auto}
-    .c{background:rgba(255,255,255,0.5);backdrop-filter:blur(12px);border-radius:24px;padding:24px 20px;box-shadow:0 8px 24px rgba(0,0,0,0.1);margin-bottom:20px}
+    .c{background:rgba(255,255,255,0.5);backdrop-filter:blur(12px);
+       border-radius:24px;padding:24px 20px;margin-bottom:20px;
+       box-shadow:0 8px 24px rgba(0,0,0,0.1)}
     .hr{display:flex;align-items:center;gap:16px}
     .lw{position:relative;width:100px;height:100px}
-    .lg{width:100%;height:100%;border-radius:50%;background:#fff center/cover no-repeat;transition:transform .5s}
-    .pc{position:absolute;top:0;left:0;width:100px;height:100px;transform:rotate(-90deg);display:none}
+    .lg{width:100%;height:100%;border-radius:50%;
+         background:#fff center/cover no-repeat;transition:transform .5s}
+    .pc{position:absolute;top:0;left:0;width:100px;height:100px;
+        transform:rotate(-90deg);display:none}
     .pc circle{fill:none;stroke-width:6}
     .pc .bg{stroke:rgba(0,0,0,0.1)}
-    .pc .fg{stroke:#4A90E2;stroke-dasharray:314;stroke-dashoffset:314;transition:stroke-dashoffset .3s}
+    .pc .fg{stroke:#4A90E2;stroke-dasharray:314;
+            stroke-dashoffset:314;transition:stroke-dashoffset .3s}
     .info{flex:1}
     .title{font-size:1.8rem;font-weight:700;margin-bottom:6px}
     .stats{font-size:0.9rem;opacity:0.8}
     .stats span+span::before{content:" | ";color:#555}
-    .btn{display:block;width:100%;padding:14px;margin-top:20px;font-size:1.2rem;font-weight:700;border:none;border-radius:30px;background:linear-gradient(135deg,#4A90E2,#357ABD);color:#fff;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2)}
+    .btn{display:block;width:100%;padding:14px;margin-top:20px;
+         font-size:1.2rem;font-weight:700;border:none;border-radius:30px;
+         background:linear-gradient(135deg,#4A90E2,#357ABD);
+         color:#fff;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2)}
     .gal{display:flex;overflow-x:auto;gap:12px}
-    .gal img{width:140px;height:280px;object-fit:cover;border-radius:16px;border:2px solid rgba(0,0,0,0.1);flex-shrink:0}
+    .gal img{width:140px;height:280px;object-fit:cover;
+             border-radius:16px;border:2px solid rgba(0,0,0,0.1);
+             flex-shrink:0}
     .dc .t{font-size:1.2rem;font-weight:700;margin-bottom:8px}
     .tw{max-height:80px;overflow-y:auto;padding-right:8px}
     .tw .text{font-size:1rem;line-height:1.4}
     .stars{display:flex;justify-content:center;gap:8px;margin-bottom:12px}
     .star{font-size:2rem;cursor:pointer;color:#888;transition:color .2s}
     .star.filled{color:gold}
-    .co{position:fixed;bottom:0;left:0;width:100%;height:50%;background:rgba(255,255,255,0.8);backdrop-filter:blur(16px);transform:translateY(100%);transition:transform .3s;padding:20px;z-index:200}
+    .co{position:fixed;bottom:0;left:0;width:100%;height:50%;
+        background:rgba(255,255,255,0.8);backdrop-filter:blur(16px);
+        transform:translateY(100%);transition:transform .3s;padding:20px;
+        z-index:200}
     .co.open{transform:translateY(0)}
     .co h3{text-align:center;margin-bottom:12px;font-size:1.2rem}
-    .co textarea{width:100%;height:80px;padding:8px;border-radius:10px;font-size:1rem;resize:none;border:1px solid rgba(0,0,0,0.2)}
-    .send{margin-top:12px;width:100%;padding:12px;background:#4A90E2;color:#fff;border:none;border-radius:8px;font-size:1rem;cursor:pointer}
+    .co textarea{width:100%;height:80px;padding:8px;border-radius:10px;
+                 font-size:1rem;resize:none;border:1px solid rgba(0,0,0,0.2)}
+    .send{margin-top:12px;width:100%;padding:12px;background:#4A90E2;
+          color:#fff;border:none;border-radius:8px;font-size:1rem;
+          cursor:pointer}
     .clist{max-height:200px;overflow-y:auto}
-    .citem{background:rgba(255,255,255,0.6);border-radius:12px;padding:10px;margin:8px 0;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+    .citem{background:rgba(255,255,255,0.6);border-radius:12px;
+           padding:10px;margin:8px 0;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
     .citem .stars-c{margin-bottom:6px}
     .citem .id{font-size:0.8rem;opacity:0.7;margin-bottom:4px}
-    .more{width:100%;padding:10px;margin-top:10px;border:none;border-radius:20px;background:#357ABD;color:#fff;font-size:1rem;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2)}
+    .more{width:100%;padding:10px;margin-top:10px;border:none;
+          border-radius:20px;background:#357ABD;color:#fff;
+          font-size:1rem;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
   </style>
 </head>
 <body>
-  <header>
-    <h1>Zest App</h1>
-    <div class="hb" id="h">≡</div>
-  </header>
 
-  <!-- Toolbar -->
-  <div class="mo" id="o">
-    <button id="c">İletişim</button>
-    <button id="s">Paylaş</button>
-    <button id="a">Admin</button>
-  </div>
+  <!-- Yükleme animasyonu -->
+  <div id="loader"><div class="spinner"></div></div>
 
-  <div class="main" id="m">
-    <div class="c">
-      <div class="hr">
-        <div class="lw">
-          <div class="lg" id="l"></div>
-          <svg class="pc" id="p" viewBox="0 0 100 100">
-            <circle class="bg" cx="50" cy="50" r="48"/>
-            <circle class="fg" cx="50" cy="50" r="48"/>
-          </svg>
-        </div>
-        <div class="info">
-          <div class="title" id="title">StarMaker</div>
-          <div class="stats">
-            <span id="stat-download">500M+</span>
-            <span id="stat-size">146MB</span>
-            <span id="stat-age">12+</span>
-            <span id="stat-rating">4.4★</span>
+  <!-- İçerik -->
+  <div id="appContent" style="display:none">
+
+    <header>
+      <h1>Zest App</h1>
+      <div class="hb" id="h">≡</div>
+    </header>
+
+    <div class="mo" id="o">
+      <button id="c">İletişim</button>
+      <button id="s">Paylaş</button>
+      <button id="a">Admin</button>
+    </div>
+
+    <div class="main" id="m">
+      <div class="c">
+        <div class="hr">
+          <div class="lw">
+            <div class="lg" id="l"></div>
+            <svg class="pc" id="p" viewBox="0 0 100 100">
+              <circle class="bg" cx="50" cy="50" r="48"/>
+              <circle class="fg" cx="50" cy="50" r="48"/>
+            </svg>
+          </div>
+          <div class="info">
+            <div class="title" id="title"></div>
+            <div class="stats">
+              <span id="stat-download"></span>
+              <span id="stat-size"></span>
+              <span id="stat-age"></span>
+              <span id="stat-rating"></span>
+            </div>
           </div>
         </div>
+        <button class="btn" id="b">İndir</button>
       </div>
-      <button class="btn" id="b">İndir</button>
+
+      <div class="c gal" id="g"></div>
+
+      <div class="c dc">
+        <div class="t">Açıklama</div>
+        <div class="tw">
+          <div class="text" id="description"></div>
+        </div>
+      </div>
+
+      <div class="c">
+        <div class="stars" id="t">
+          <span class="star" data-val="1">☆</span>
+          <span class="star" data-val="2">☆</span>
+          <span class="star" data-val="3">☆</span>
+          <span class="star" data-val="4">☆</span>
+          <span class="star" data-val="5">☆</span>
+        </div>
+        <div class="clist" id="q"></div>
+        <button class="more" id="btnMoreComments" style="display:none">Tüm yorumlar</button>
+      </div>
     </div>
 
-    <!-- Galeri -->
-    <div class="c gal" id="g"></div>
-
-    <div class="c dc">
-      <div class="t">Açıklama</div>
-      <div class="tw">
-        <div class="text" id="description">Karaoke söyle...</div>
-      </div>
+    <div class="co" id="d">
+      <h3 id="ht">Yorum</h3>
+      <textarea id="i" maxlength="500"></textarea>
+      <button class="send" id="n">Gönder</button>
     </div>
 
-    <div class="c">
-      <div class="stars" id="t">
-        <span class="star" data-val="1">☆</span>
-        <span class="star" data-val="2">☆</span>
-        <span class="star" data-val="3">☆</span>
-        <span class="star" data-val="4">☆</span>
-        <span class="star" data-val="5">☆</span>
-      </div>
-      <div class="clist" id="q"></div>
-      <button class="more" id="btnMoreComments" style="display:none">Tüm yorumlar</button>
-    </div>
   </div>
 
-  <div class="co" id="d">
-    <h3 id="ht">Yorum</h3>
-    <textarea id="i" maxlength="500"></textarea>
-    <button class="send" id="n">Gönder</button>
-  </div>
-
-  <!-- Firebase SDK’ları -->
+  <!-- Firebase & Mantık -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
     import {
@@ -137,25 +188,27 @@
     const db = getDatabase(app);
     const basePath = 'program/zest';
 
-    // Elementler
-    const logoEl    = document.getElementById('l');
-    const titleEl   = document.getElementById('title');
-    const dlEl      = document.getElementById('stat-download');
-    const sizeEl    = document.getElementById('stat-size');
-    const ageEl     = document.getElementById('stat-age');
-    const rateEl    = document.getElementById('stat-rating');
-    const descEl    = document.getElementById('description');
-    const galEl     = document.getElementById('g');
-    const btnDl     = document.getElementById('b');
-    const pctSvg    = document.getElementById('p');
-    const fgCircle  = pctSvg.querySelector('.fg');
-    const starsEls  = [...document.querySelectorAll('.star')];
-    const commentsEl= document.getElementById('q');
-    const btnMore   = document.getElementById('btnMoreComments');
-    const overlay   = document.getElementById('d');
-    const overlayT  = document.getElementById('ht');
-    const overlayTa = document.getElementById('i');
-    const overlayS  = document.getElementById('n');
+    // Referanslar
+    const loader      = document.getElementById('loader');
+    const appContent  = document.getElementById('appContent');
+    const logoEl      = document.getElementById('l');
+    const titleEl     = document.getElementById('title');
+    const dlEl        = document.getElementById('stat-download');
+    const sizeEl      = document.getElementById('stat-size');
+    const ageEl       = document.getElementById('stat-age');
+    const rateEl      = document.getElementById('stat-rating');
+    const descEl      = document.getElementById('description');
+    const galEl       = document.getElementById('g');
+    const btnDl       = document.getElementById('b');
+    const pctSvg      = document.getElementById('p');
+    const fg          = pctSvg.querySelector('.fg');
+    const starsEls    = [...document.querySelectorAll('.star')];
+    const commentsEl  = document.getElementById('q');
+    const btnMore     = document.getElementById('btnMoreComments');
+    const overlay     = document.getElementById('d');
+    const overlayT    = document.getElementById('ht');
+    const overlayTa   = document.getElementById('i');
+    const overlayS    = document.getElementById('n');
 
     let selectedRating = 0;
 
@@ -164,28 +217,27 @@
       if(!snap.exists()) return;
       const data = snap.val();
 
-      // Başlık & logo
-      titleEl.textContent = data.name || titleEl.textContent;
+      titleEl.textContent    = data.name;
       if(data.logoUrl) logoEl.style.backgroundImage = `url(${data.logoUrl})`;
 
-      // Stats
-      sizeEl.textContent  = data.size     || sizeEl.textContent;
-      ageEl.textContent   = data.age      || ageEl.textContent;
-      dlEl.textContent    = formatDownload(data.downloadCount||0);
-      rateEl.textContent  = (data.ratingAvg||parseFloat(rateEl.textContent)) + '★';
+      sizeEl.textContent     = data.size;
+      ageEl.textContent      = data.age;
+      dlEl.textContent       = formatDownload(data.downloadCount);
+      rateEl.textContent     = data.ratingAvg.toFixed(1)+'★';
 
-      // Açıklama
-      descEl.textContent  = data.description || descEl.textContent;
+      descEl.textContent     = data.description;
 
-      // Galeri (placeholder veya gerçek URL listesi data.galleryUrls olabilir)
+      // Galeri
       galEl.innerHTML = '';
-      (data.galleryUrls||["","","",""]).forEach(url=>{
+      const urls = data.galleryUrls && data.galleryUrls.length
+        ? data.galleryUrls
+        : Array(4).fill('https://via.placeholder.com/200x400');
+      urls.forEach(url=>{
         const img = document.createElement('img');
-        img.src = url || 'https://via.placeholder.com/200x400';
+        img.src = url;
         galEl.appendChild(img);
       });
 
-      // Yorumları yükle
       await loadComments();
     }
 
@@ -202,17 +254,16 @@
       return '1M+';
     }
 
-    // loadComments ve prependComment
     async function loadComments(){
       commentsEl.innerHTML='';
       const snap = await get(child(ref(db), `${basePath}/comments`));
       if(!snap.exists()) return;
-      const list = Object.values(snap.val());
-      const showAll = list.length>3;
-      btnMore.style.display = showAll?'block':'none';
-      const toShow = showAll? list.slice(-3): list;
+      const all = Object.values(snap.val());
+      btnMore.style.display = all.length>3?'block':'none';
+      const toShow = all.length>3? all.slice(-3): all;
       toShow.forEach(c=> prependComment(c));
     }
+
     function prependComment(c){
       const div = document.createElement('div');
       div.className = 'citem';
@@ -221,6 +272,7 @@
                        <div class="text">${c.text}</div>`;
       commentsEl.prepend(div);
     }
+
     btnMore.onclick = ()=>{ loadCommentsAll(); btnMore.style.display='none'; };
     async function loadCommentsAll(){
       commentsEl.innerHTML='';
@@ -231,25 +283,21 @@
 
     // İndir butonu
     btnDl.onclick = ()=>{
-      let pct=0, state='indir', iv;
+      let pct=0,state='indir',iv;
       if(state==='indir'){
         clearInterval(iv);
         btnDl.disabled=true; logoEl.style.transform='scale(.7)'; pctSvg.style.display='block';
-        iv = setInterval(async ()=>{
-          pct = pct<100? pct+1:100;
-          fgCircle.style.strokeDashoffset = 314-314*pct/100;
-          btnDl.textContent = pct+'%';
+        iv=setInterval(async()=>{
+          pct=pct<100?pct+1:100;
+          fg.style.strokeDashoffset=314-314*pct/100;
+          btnDl.textContent=pct+'%';
           if(pct===100){
             clearInterval(iv);
-            pctSvg.style.display='none';
-            btnDl.disabled=false;
-            btnDl.textContent='Kaldır';
-            state='kaldir';
-            // DB++
-            await runTransaction(ref(db, `${basePath}/downloadCount`), n=>(n||0)+1);
-            // Güncel göster
-            const snap2 = await get(child(ref(db), basePath));
-            dlEl.textContent = formatDownload(snap2.val().downloadCount||0);
+            pctSvg.style.display='none'; btnDl.disabled=false;
+            btnDl.textContent='Kaldır'; state='kaldir';
+            await runTransaction(ref(db,`${basePath}/downloadCount`),n=>(n||0)+1);
+            const snap2 = await get(child(ref(db),basePath));
+            dlEl.textContent=formatDownload(snap2.val().downloadCount);
           }
         },20);
       } else {
@@ -258,43 +306,45 @@
     };
 
     // Yorum overlay
-    starsEls.forEach(s=>{
-      s.onclick = ()=>{
-        selectedRating = +s.dataset.val;
-        starsEls.forEach(x=> x.classList.toggle('filled', +x.dataset.val<=selectedRating));
-        overlayT.textContent = selectedRating+'★';
-        overlay.classList.add('open');
-      };
+    starsEls.forEach(s=>s.onclick=()=>{
+      selectedRating=+s.dataset.val;
+      starsEls.forEach(x=>x.classList.toggle('filled',+x.dataset.val<=selectedRating));
+      overlayT.textContent=selectedRating+'★';
+      overlay.classList.add('open');
     });
-    overlayS.onclick = async ()=>{
-      const text = overlayTa.value.trim();
+    overlayS.onclick=async()=>{
+      const text=overlayTa.value.trim();
       if(!text||!selectedRating) return;
-      const newRef = push(ref(db, `${basePath}/comments`));
-      const id = newRef.key;
-      await set(newRef, { id, rating:selectedRating, text });
+      const newRef = push(ref(db,`${basePath}/comments`));
+      const id=newRef.key;
+      await set(newRef,{id,rating:selectedRating,text});
       overlayTa.value=''; overlay.classList.remove('open');
-      prependComment({ id, rating:selectedRating, text });
-      // Ortalama güncelle
-      const snap = await get(child(ref(db), `${basePath}/comments`));
-      const avg = Math.max(
-        Object.values(snap.val()).reduce((a,b)=>a+ b.rating, 0) / Object.values(snap.val()).length,
+      prependComment({id,rating:selectedRating,text});
+      const snap=await get(child(ref(db),`${basePath}/comments`));
+      const avg=Math.max(
+        Object.values(snap.val()).reduce((a,b)=>a+b.rating,0)/Object.values(snap.val()).length,
         3.3
       );
-      await set(ref(db, `${basePath}/ratingAvg`), avg);
-      rateEl.textContent = avg.toFixed(1)+'★';
+      await set(ref(db,`${basePath}/ratingAvg`),avg);
+      rateEl.textContent=avg.toFixed(1)+'★';
     };
-    overlay.onclick = e=>{ if(e.target===overlay) overlay.classList.remove('open'); };
+    overlay.onclick=e=>{ if(e.target===overlay) overlay.classList.remove('open');};
 
     // Toolbar & share & admin
-    document.getElementById('h').onclick = ()=> document.getElementById('o').classList.toggle('open');
-    document.getElementById('o').onclick = e=> e.target===document.getElementById('o')&&document.getElementById('o').classList.remove('open');
-    document.getElementById('c').onclick = ()=> location.href="mailto:cmsupporjs@gmail.com";
-    document.getElementById('s').onclick = ()=> navigator.share? navigator.share({title:document.title,text:"Bu site:",url:location.href}) : alert("Paylaşım desteklenmiyor.");
-    document.getElementById('a').onclick = ()=> location.href="admin.html";
+    document.getElementById('h').onclick=()=>document.getElementById('o').classList.toggle('open');
+    document.getElementById('o').onclick=e=>e.target===document.getElementById('o')&&document.getElementById('o').classList.remove('open');
+    document.getElementById('c').onclick=()=>location.href="mailto:cmsupporjs@gmail.com";
+    document.getElementById('s').onclick=()=>navigator.share?navigator.share({title:document.title,text:"Bu site:",url:location.href}):alert("Desteklenmiyor");
+    document.getElementById('a').onclick=()=>location.href="admin.html";
 
-    // İlk yükle
-    loadData();
+    // Başlat
+    window.addEventListener('DOMContentLoaded',async()=>{
+      loader.style.display='flex';
+      appContent.style.display='none';
+      await loadData();
+      loader.style.display='none';
+      appContent.style.display='';
+    });
   </script>
 </body>
-  </html>
-  
+</html>
