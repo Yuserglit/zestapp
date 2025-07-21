@@ -27,7 +27,7 @@
     .hdr{position:relative;display:flex;align-items:center;justify-content:space-between;
          background:rgba(255,255,255,0.6);backdrop-filter:blur(12px);
          padding:0 20px;height:60px;z-index:1000;}
-    .hdr .t{font-size:1.5rem;font-weight:700}
+    .hdr .t{font-size:1.5rem;font-weight:700;cursor:pointer}
     .hdr .h{font-size:1.8rem;cursor:pointer}
     .dd{position:absolute;top:60px;right:20px;background:rgba(255,255,255,0.9);
          backdrop-filter:blur(12px);border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);
@@ -59,8 +59,8 @@
     .prv{display:flex;flex-wrap:wrap;margin-top:12px;}
     .prv img{max-width:80px;border-radius:12px;margin:8px;}
 
-    /* İstatistikler kartı */
     #statsDisplay{line-height:1.6;font-size:1rem;}
+    #apkStatus{margin-top:12px;font-size:0.9rem;}
   </style>
 
   <!-- EmailJS SDK -->
@@ -68,15 +68,14 @@
   <!-- Firebase SDK’ları -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-    import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+    import { getDatabase, ref, set, get, child, remove } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
-    // ——— Senin firebaseConfig’in ———
     const firebaseConfig = {
       apiKey: "AIzaSyBDTaO6Wk4vY_lcAFdvjs-3ymHDplup_40",
       authDomain: "zestappsite-8f333.firebaseapp.com",
       databaseURL: "https://zestappsite-8f333-default-rtdb.asia-southeast1.firebasedatabase.app",
       projectId: "zestappsite-8f333",
-      storageBucket: "zestappsite-8f333.firebasestorage.app",
+      storageBucket: "zestappsite-8f333.appspot.com",
       messagingSenderId: "4103904597",
       appId: "1:4103904597:web:cdff0ab98ccea316d663dc",
       measurementId: "G-2PS6YHN55W"
@@ -98,7 +97,7 @@
         };
       });
 
-      // ——— Program İsmi Kaydet ———
+      // Program İsmi Kaydet
       document.getElementById('upName').onclick = () => {
         const val = document.getElementById('iname').value.trim();
         if (!val) return alert('Lütfen isim girin');
@@ -107,7 +106,7 @@
           .catch(e=> alert('Hata: '+e));
       };
 
-      // ——— Açıklama Kaydet ———
+      // Açıklama Kaydet
       document.getElementById('upDesc').onclick = () => {
         const txt = document.getElementById('desc').value.trim();
         if (!txt) return alert('Lütfen açıklama girin');
@@ -116,7 +115,7 @@
           .catch(e=> alert('Hata: '+e));
       };
 
-      // ——— AAB Yükle & Progres + Firebase Kaydet ———
+      // AAB Yükle
       document.getElementById('upAab').onclick = () => {
         const f = document.getElementById('aab').files[0];
         const s = document.getElementById('s1');
@@ -136,13 +135,7 @@
         },200);
       };
 
-      // ——— Resim Yükle + Önizleme ———
-      document.getElementById('up2').onclick = () => {
-        if (!document.getElementById('pv').children.length)
-          return alert('Resim seçin');
-        // Burada Firebase Storage entegrasyonu eklenebilir
-        alert('Resimler seçildi, Storage entegrasyonu ekleyin');
-      };
+      // Resim Yükle + Önizleme
       document.getElementById('img').onchange = e => {
         const pv = document.getElementById('pv');
         pv.innerHTML='';
@@ -159,13 +152,9 @@
           }
         });
       };
+      document.getElementById('up2').onclick = () => alert('Resimler seçildi, Storage entegrasyonu ekleyin');
 
-      // ——— Logo Yükle + Önizleme ———
-      document.getElementById('up3').onclick = () => {
-        if (!document.getElementById('pv2').children.length)
-          return alert('Logo seçin');
-        alert('Logo seçildi, Storage entegrasyonu ekleyin');
-      };
+      // Logo Yükle + Önizleme
       document.getElementById('lg').onchange = e => {
         const pv2 = document.getElementById('pv2');
         pv2.innerHTML='';
@@ -177,8 +166,9 @@
           i.src=URL.createObjectURL(f);
         }
       };
+      document.getElementById('up3').onclick = () => alert('Logo seçildi, Storage entegrasyonu ekleyin');
 
-      // ——— İstatistikleri Oku & Göster ———
+      // İstatistikleri Oku & Göster
       document.getElementById('showStats').onclick = () => {
         get(child(ref(db), basePath)).then(snap=>{
           if (!snap.exists()) return alert('Veri bulunamadı');
@@ -191,6 +181,29 @@
             `<strong>Ortalama Puan:</strong> ${data.ratingAvg||'0.0'}`;
         }).catch(e=> alert('Hata okurken: '+e));
       };
+
+      // Yeni: APK Link Yükle
+      document.getElementById('saveApkLink').onclick = () => {
+        const link = document.getElementById('apkLink').value.trim();
+        const status = document.getElementById('apkStatus');
+        if (!link.endsWith('.apk')) {
+          status.textContent = '❌ Link .apk ile bitmeli.';
+          status.style.color = 'red';
+          return;
+        }
+        status.textContent = 'Kaydediliyor...';
+        status.style.color = 'black';
+        // İstersen eskiyi remove(ref(db, `${basePath}/apk_link`))
+        set(ref(db, `${basePath}/apk_link`), link)
+          .then(() => {
+            status.textContent = '✅ Link başarıyla kaydedildi.';
+            status.style.color = 'green';
+          })
+          .catch(e => {
+            status.textContent = '❌ Hata: ' + e.message;
+            status.style.color = 'red';
+          });
+      };
     });
   </script>
 
@@ -202,18 +215,15 @@
       const SERVICE_ID='service_ufnn2yj';
       const TEMPLATE_ID='template_f8nuf7l';
       let verificationCode='';
-
       document.addEventListener('DOMContentLoaded',()=>{
         const lc=document.getElementById('lc');
         const ap=document.getElementById('ap');
         const e=document.getElementById('e');
         const l=document.getElementById('l');
         const st=document.getElementById('st');
-
         if (localStorage.getItem('adminLogged')==='true') {
           lc.style.display='none'; ap.style.display='flex';
         }
-
         e.oninput = () => {
           if (e.value.trim()===TARGET_EMAIL) {
             l.classList.add('enabled'); l.disabled=false;
@@ -221,7 +231,6 @@
             l.classList.remove('enabled'); l.disabled=true;
           }
         };
-
         l.onclick = () => {
           if (e.value.trim()!==TARGET_EMAIL) return;
           verificationCode=Math.floor(100000+Math.random()*900000).toString();
@@ -276,6 +285,7 @@
         <button data-p="l2">Logo Yükle</button>
         <button data-p="d2">Açıklama</button>
         <button data-p="stats">İstatistikler</button>
+        <button data-p="apk">APK Link Yükle</button>
       </div>
     </div>
     <div class="ct">
@@ -335,8 +345,17 @@
           <button id="showStats">Güncelle</button>
         </div>
       </div>
+      <!-- APK Link Yükle -->
+      <div id="panel-apk" class="panel">
+        <div class="card">
+          <h3>APK Link Yükle</h3>
+          <label>Link (.apk):</label>
+          <input type="text" id="apkLink" placeholder="https://.../app.apk">
+          <button id="saveApkLink">Kaydet</button>
+          <p id="apkStatus"></p>
+        </div>
+      </div>
     </div>
   </div>
 </body>
-  </html>
-  
+            </html>
