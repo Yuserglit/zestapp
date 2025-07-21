@@ -66,10 +66,23 @@
   <!-- EmailJS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <!-- Firebase SDK’ları -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-    import { getDatabase, ref, set, get, child, remove } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
-
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBDTaO6Wk4vY_lcAFdvjs-3ymHDplup_40",
+  authDomain: "zestappsite-8f333.firebaseapp.com",
+  databaseURL: "https://zestappsite-8f333-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "zestappsite-8f333",
+  storageBucket: "zestappsite-8f333.appspot.com",
+  messagingSenderId: "4103904597",
+  appId: "1:4103904597:web:cdff0ab98ccea316d663dc",
+  measurementId: "G-2PS6YHN55W"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const basePath = 'program/zest';
+</script>
     const firebaseConfig = {
       apiKey: "AIzaSyBDTaO6Wk4vY_lcAFdvjs-3ymHDplup_40",
       authDomain: "zestappsite-8f333.firebaseapp.com",
