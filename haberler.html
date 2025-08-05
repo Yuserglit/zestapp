@@ -5,77 +5,86 @@
   <title>Haberler</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: sans-serif;
-      background-color: #f0f0f0;
-      padding: 10px;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: sans-serif; background-color: #f0f0f0; padding: 10px; }
 
     .haber-kart {
-      display: flex;
-      background: #ffffff;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      margin-bottom: 16px;
-      text-decoration: none;
-      color: inherit;
-      transition: transform 0.2s ease;
+      display: flex; background: #ffffff; border-radius: 12px; overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 16px;
+      text-decoration: none; color: inherit; transition: transform 0.2s ease;
+      cursor: pointer;
     }
+    .haber-kart:hover { transform: scale(1.01); }
+    .haber-resim { width: 130px; height: auto; object-fit: cover; }
+    .haber-detay { padding: 12px; display: flex; flex-direction: column; justify-content: center; flex: 1; }
+    .haber-baslik { font-weight: bold; font-size: 18px; margin-bottom: 6px; }
+    .haber-saat { font-size: 13px; color: #666; margin-bottom: 4px; }
 
-    .haber-kart:hover {
-      transform: scale(1.01);
+    /* Detay tam ekran popup */
+    #detayAlani {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #ffffff; padding: 20px; overflow-y: auto; z-index: 999;
     }
-
-    .haber-resim {
-      width: 130px;
-      height: auto;
-      object-fit: cover;
-    }
-
-    .haber-detay {
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      flex: 1;
-    }
-
-    .haber-baslik {
-      font-weight: bold;
-      font-size: 16px;
-      margin-bottom: 8px;
-    }
-
-    .haber-saat {
-      font-size: 13px;
-      color: #666;
+    #detayAlani img { width: 100%; height: auto; object-fit: cover; border-radius: 8px; }
+    #detayAlani h2 { margin-top: 12px; font-size: 22px; font-weight: bold; }
+    #detayAlani .bilgi-bar { display: flex; align-items: center; color: #555; font-size: 14px; margin: 10px 0; }
+    #detayAlani .bilgi-bar i { font-style: normal; margin-right: 6px; }
+    #detayAlani .aciklama { margin: 10px 0; font-size: 16px; line-height: 1.6; color: #333; }
+    #detayAlani button {
+      position: fixed; bottom: 20px; right: 20px; padding: 10px 16px;
+      border: none; background: #f00; color: #fff; border-radius: 6px;
+      font-weight: bold; cursor: pointer; z-index: 1000;
     }
   </style>
+  <!-- Icon font -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
 
-<a href="detay.html?id=1" class="haber-kart">
+<!-- HABERLER -->
+<div class="haber-kart" onclick="gosterDetay(this)" data-title="Türkmenistan ve Özbekistan Liderleri Buluştu" data-img="https://raw.githubusercontent.com/Yuserglit/zestapp/main/web-app-manifest-512x512.png" data-text="Türkmenistan ile Özbekistan arasındaki kritik zirve sonuçlandı." data-saat="21:56" data-izlenme="1243">
   <img class="haber-resim" src="https://raw.githubusercontent.com/Yuserglit/zestapp/main/web-app-manifest-512x512.png" alt="kapak">
   <div class="haber-detay">
     <div class="haber-baslik">Türkmenistan ve Özbekistan Liderleri Buluştu</div>
-    <div class="haber-saat">şu gün 21:56</div>
+    <div class="haber-saat"><i class="material-icons">schedule</i> 21:56</div>
   </div>
-</a>
+</div>
 
-<a href="detay.html?id=2" class="haber-kart">
+<div class="haber-kart" onclick="gosterDetay(this)" data-title="Başkanlık Sarayı’nda Tarihi Zirve" data-img="https://raw.githubusercontent.com/Yuserglit/zestapp/main/web-app-manifest-512x512.png" data-text="Başkanlık Sarayı’nda liderlerle yapılan önemli görüşme hakkında detaylar." data-saat="02:15" data-izlenme="912">
   <img class="haber-resim" src="https://raw.githubusercontent.com/Yuserglit/zestapp/main/web-app-manifest-512x512.png" alt="kapak">
   <div class="haber-detay">
     <div class="haber-baslik">Başkanlık Sarayı’nda Tarihi Zirve</div>
-    <div class="haber-saat">şu gün 02:15</div>
+    <div class="haber-saat"><i class="material-icons">schedule</i> 02:15</div>
   </div>
-</a>
+</div>
 
+<!-- DETAY ALANI (tam ekran) -->
+<div id="detayAlani">
+  <img id="detayResim" alt="Kapak">
+  <h2 id="detayBaslik"></h2>
+  <div class="bilgi-bar">
+    <i class="material-icons">schedule</i> <span id="detaySaat"></span> &nbsp;&nbsp;
+    <i class="material-icons">visibility</i> <span id="detayIzlenme"></span> izlenme
+  </div>
+  <p id="detayYazi" class="aciklama"></p>
+  <button onclick="kapatDetay()">Kapat</button>
+</div>
+
+<!-- JS -->
+<script>
+  function gosterDetay(eleman) {
+    document.getElementById("detayResim").src = eleman.getAttribute("data-img");
+    document.getElementById("detayBaslik").innerText = eleman.getAttribute("data-title");
+    document.getElementById("detaySaat").innerText = eleman.getAttribute("data-saat");
+    document.getElementById("detayIzlenme").innerText = eleman.getAttribute("data-izlenme");
+    document.getElementById("detayYazi").innerText = eleman.getAttribute("data-text");
+    document.getElementById("detayAlani").style.display = "block";
+  }
+
+  function kapatDetay() {
+    document.getElementById("detayAlani").style.display = "none";
+  }
+</script>
 
 </body>
 </html>
