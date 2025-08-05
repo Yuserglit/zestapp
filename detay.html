@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Haberler</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: sans-serif;
+      background-color: #f0f0f0;
+      padding: 10px;
+    }
+
+    .haber-kart {
+      display: flex;
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 16px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s ease;
+    }
+
+    .haber-kart:hover {
+      transform: scale(1.01);
+    }
+
+    .haber-resim {
+      width: 130px;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .haber-detay {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1;
+    }
+
+    .haber-baslik {
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .haber-saat {
+      font-size: 13px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+<a href="detay.html?id=1" class="haber-kart">
+  <img class="haber-resim" src="https://raw.githubusercontent.com/Yuserglit/zestapp/main/web-app-manifest-512x512.png" alt="kapak">
+  <div class="haber-detay">
+    <div class="haber-baslik">Türkmenistan ve Özbekistan Liderleri Buluştu</div>
+    <div class="haber-saat">şu gün 01:56</div>
+  </div>
+</a>
+
+<a href="detay.html?id=2" class="haber-kart">
+  <img class="haber-resim" src="https://raw.githubusercontent.com/Yuserglit/zestapp/main/web-app-manifest-512x512.png" alt="kapak">
+  <div class="haber-detay">
+    <div class="haber-baslik">Başkanlık Sarayı’nda Tarihi Zirve</div>
+    <div class="haber-saat">şu gün 02:15</div>
+  </div>
+</a>
+
+
+</body>
+</html>
